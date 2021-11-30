@@ -52,6 +52,7 @@ class PrimaryThread(QObject):
                         print('Ex in sensor Thread readline() 49 : ' + str(e))
                     for hx in unit:
                         hexformat = hexformat + '0X{0:02X} '.format(hx)
+                    unit = b''
                     self.signal.emit(str(line) + " - " + hexformat)
                     hexformat = ''
 

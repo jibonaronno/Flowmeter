@@ -32,6 +32,7 @@ from dispatchers import PrimaryThread
 
 from mimic import Mimic
 from crud import CRUD
+from datetime import datetime
 
 _UI = join(dirname(abspath(__file__)), 'top.ui')
 _UI2 = join(dirname(abspath(__file__)), 'dashboard.ui')
@@ -108,7 +109,9 @@ class MainWindow(QMainWindow):
 
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
-        print(self.sensorDataString)
+        strdatetime = datetime.today().strftime('%m-%d-%Y %H:%M:%S')
+        print(strdatetime + " - " +self.sensorDataString)
+        self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])
 
     @Slot()
     def on_btn1_clicked(self):
