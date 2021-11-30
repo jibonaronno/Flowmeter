@@ -124,7 +124,3 @@ class DetectDevices(object):
         except Exception as e:
             print(f"Error Connect Or Reading Serial Port:{port[0]} " + str(e))
             return None
-
-class AutoDetectMarlin(QObject):
-    def __init__(self):
-        pass
