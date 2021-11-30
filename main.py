@@ -34,6 +34,11 @@ from mimic import Mimic
 from crud import CRUD
 from datetime import datetime
 
+''' 
+Database codes are in crud.py file. here the object name is db. Accessed by self.db.
+Implemented in sensordata callback function.
+'''
+
 _UI = join(dirname(abspath(__file__)), 'top.ui')
 _UI2 = join(dirname(abspath(__file__)), 'dashboard.ui')
 
