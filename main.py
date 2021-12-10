@@ -32,17 +32,20 @@ from dispatchers import PrimaryThread
 
 from mimic import Mimic
 from crud import CRUD
+from dataview import DataView
 from datetime import datetime
 
 ''' 
 Database codes are in crud.py file. here the object name is db. Accessed by self.db.
-Implemented in sensordata callback function.
+Implemented in sensordata(...) callback function. database file is flow.db . 
 '''
 
 _UI = join(dirname(abspath(__file__)), 'top.ui')
 _UI2 = join(dirname(abspath(__file__)), 'dashboard.ui')
+_UI3 = join(dirname(abspath(__file__)), 'commands.ui')
 
-_CMD_1 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x50]
+#08  04  00  00  00  02  71  52
+_CMD_1 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_2 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x51]
 _CMD_3 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x52]
 _CMD_4 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x53]
@@ -73,9 +76,11 @@ class MainWindow(QMainWindow):
         self.cmdlist.append(_CMD_4)
 
 
+        #List only usb-ttl ports in self.portListBox QListWidget
         self.ports = list(port_list.comports())
         for p in self.ports:
-            self.portListBox.addItem(p[0])
+            if "usb" in p[0]:
+                self.portListBox.addItem(p[0])
 
         self.btn1.setEnabled(False)
         self.btn2.setEnabled(False)
@@ -86,6 +91,8 @@ class MainWindow(QMainWindow):
 
         self.db = CRUD("flow.db")
         self.db.openDBHard()
+
+        self.dtv = DataView()
 
         # renderer =  QtSvg.QSvgRenderer('ico1.svg')
         # painter = QPainter(self.btn1)
@@ -114,9 +121,12 @@ class MainWindow(QMainWindow):
 
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
-        strdatetime = datetime.today().strftime('%m-%d-%Y %H:%M:%S')
-        print(strdatetime + " - " +self.sensorDataString)
-        self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])
+        strdatetime = datetime.today().strftime('%m-%d-%Y %H:%M:%S')                #Collect Present Date Time
+        print(strdatetime + " - " +self.sensorDataString)                           #
+        self.msgListBox.addItem(strdatetime + " - " +self.sensorDataString)         #Insert incomming data to local List Box
+        self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])    #Inserting data to database
+        if(self.msgListBox.count() > 10):
+            self.msgListBox.clear()
 
     @Slot()
     def on_btn1_clicked(self):
@@ -152,7 +162,14 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def on_btn3_clicked(self):
-        self.db.insert_meter_data_hard()
+        ''' Example code to insert data in database
+        #self.db.insert_meter_data_hard()
+        '''
+
+
+    @Slot()
+    def on_btn4_clicked(self):
+        self.dtv.showNormal()
 
 
 if __name__ == '__main__':
