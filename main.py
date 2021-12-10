@@ -46,7 +46,7 @@ _UI3 = join(dirname(abspath(__file__)), 'commands.ui')
 
 #08  04  00  00  00  02  71  52
 _CMD_1 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
-_CMD_2 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x51]
+_CMD_2 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_3 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x52]
 _CMD_4 = [0x08, 0x04, 0x00, 0x0A, 0x00, 0x02, 0x51, 0x53]
 class MainWindow(QMainWindow):
@@ -79,7 +79,7 @@ class MainWindow(QMainWindow):
         #List only usb-ttl ports in self.portListBox QListWidget
         self.ports = list(port_list.comports())
         for p in self.ports:
-            if "usb" in p[0]:
+            if "USB" in p[1]:
                 self.portListBox.addItem(p[0])
 
         self.btn1.setEnabled(False)
@@ -104,8 +104,8 @@ class MainWindow(QMainWindow):
             print("Port Item Changed " + tm.text())
             self.selectedPort = tm.text()
             if tm.text() != "":
-                if "usb" in tm.text():
-                    self.btn1.setEnabled(True)
+                #if "USB" in tm.text():
+                self.btn1.setEnabled(True)
 
     def startSensorThread(self):
         if self.sensorPortOpen:
@@ -133,7 +133,7 @@ class MainWindow(QMainWindow):
         if self.selectedPort != "":
             if not self.sensorPortOpen:
                 try:
-                    self.serialSensor = serial.Serial(self.selectedPort, baudrate=115200, timeout=0)
+                    self.serialSensor = serial.Serial(self.selectedPort, baudrate=9600, timeout=0)
                     self.sensorPortOpen = True
                 except serial.SerialException as ex:
                     self.sensorPortOpen = False
