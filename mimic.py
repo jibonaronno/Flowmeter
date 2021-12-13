@@ -39,7 +39,7 @@ class Mimic(QWidget):
 
         qp.setPen(QColor(Qt.white))
         #font = qp.font()
-        font = QFont('Seven Segment', 28)
+        font = QFont('Seven Segment', 18)
         #Sfont.setPixelSize(48)
         qp.setFont(font)
         #qp.drawRect(10, 150, 150, 100)
@@ -47,15 +47,15 @@ class Mimic(QWidget):
         #qp.drawEllipse(100, 50, 100, 50)
         qp.drawPixmap(20, 10, QPixmap("meter.jpg"))
         qp.drawText(175, 170, "FLOW:" + self.meterFlow1)
-        qp.drawText(175, 270, " SUM:" + self.meterSum1)
+        qp.drawText(175, 200, " SUM:" + self.meterSum1)
 
         qp.drawPixmap(480, 10, QPixmap("meter.jpg"))
         qp.drawText(635, 170, "FLOW:" + self.meterFlow2)
-        qp.drawText(635, 270, " SUM:" + self.meterSum2)
+        qp.drawText(635, 200, " SUM:" + self.meterSum2)
 
         qp.drawPixmap(940, 10, QPixmap("meter.jpg"))
         qp.drawText(1095, 170, "FLOW:" + self.meterFlow3)
-        qp.drawText(1095, 270, " SUM:" + self.meterSum3)
+        qp.drawText(1095, 200, " SUM:" + self.meterSum3)
         #htmlDoc1.drawContents(qp, rect2)
 
         #qp.drawText(390, 152, "FLOW:" + self.meterFlow)
