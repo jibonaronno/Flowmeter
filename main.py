@@ -123,7 +123,8 @@ class MainWindow(QMainWindow):
         parts = starData.split(" ")
         res = "0000.00"
         if(len(parts) > 18):
-            val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
+            #val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
+            val = int(parts[15]+parts[16], base=16)
             res = str(val/10)
         return res
 
@@ -133,9 +134,11 @@ class MainWindow(QMainWindow):
         print(strdatetime + " - " +self.sensorDataString)                           #
         self.msgListBox.addItem(strdatetime + " - " +self.sensorDataString)         #Insert incomming data to local List Box
         self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])    #Inserting data to database
+        self.mimic.meterFlow1 = self.extractData(self.sensorDataString)
+        self.mimic.repaint()
         if(self.msgListBox.count() > 10):
             self.msgListBox.clear()
-            self.mimic.meterFlow1 = self.extractData(self.sensorDataString)
+
 
     @Slot()
     def on_btn1_clicked(self):
