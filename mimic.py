@@ -2,7 +2,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
+#
 class Mimic(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -11,10 +11,15 @@ class Mimic(QWidget):
 
     def initUI(self):
         self.text = "hello world"
-        self.setGeometry(0, 0, 1500, 600)
+        self.setGeometry(0, 0, 1500, 1200)
 
         self.setWindowTitle('Draw Demo')
-        self.meterFlow = "000.00"
+        self.meterFlow1 = "000.00"
+        self.meterFlow2 = "000.00"
+        self.meterFlow3 = "000.00"
+        self.meterSum1 = "000.00"
+        self.meterSum2 = "000.00"
+        self.meterSum3 = "000.00"
 
     def paintEvent(self, event):
 
@@ -41,11 +46,16 @@ class Mimic(QWidget):
         #qp.setPen(QColor(Qt.yellow))
         #qp.drawEllipse(100, 50, 100, 50)
         qp.drawPixmap(20, 10, QPixmap("meter.jpg"))
-        qp.drawText(175, 170, "FLOW:" + self.meterFlow)
+        qp.drawText(175, 170, "FLOW:" + self.meterFlow1)
+        qp.drawText(175, 270, " SUM:" + self.meterSum1)
 
         qp.drawPixmap(480, 10, QPixmap("meter.jpg"))
+        qp.drawText(635, 170, "FLOW:" + self.meterFlow2)
+        qp.drawText(635, 270, " SUM:" + self.meterSum2)
 
         qp.drawPixmap(940, 10, QPixmap("meter.jpg"))
+        qp.drawText(1095, 170, "FLOW:" + self.meterFlow3)
+        qp.drawText(1095, 270, " SUM:" + self.meterSum3)
         #htmlDoc1.drawContents(qp, rect2)
 
         #qp.drawText(390, 152, "FLOW:" + self.meterFlow)
