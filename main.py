@@ -122,8 +122,8 @@ class MainWindow(QMainWindow):
     def extractData(self, starData=""):
         parts = starData.split(" ")
         res = "0000.00"
-        if(len(parts) > 8):
-            val = int('0x' + parts[3]+parts[4]+parts[5]+parts[6])
+        if(len(parts) > 18):
+            val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18])
             res = str(val/10)
         return res
 
@@ -164,7 +164,7 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def on_btn2_clicked(self):
-        self.mimic.show()
+        #self.mimic.show()
         if self.sensorPortOpen:
             if not self.sensorThreadCreated:
                 self.startSensorThread()
