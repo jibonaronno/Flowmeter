@@ -123,7 +123,7 @@ class MainWindow(QMainWindow):
         parts = starData.split(" ")
         res = "0000.00"
         if(len(parts) > 18):
-            val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18])
+            val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
             res = str(val/10)
         return res
 
