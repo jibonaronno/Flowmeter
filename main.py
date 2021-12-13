@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.widget = uic.loadUi(_UI, self)
-        self.dash = Mimic()
+        self.mimic = Mimic()
         self.window_title = "top"
         self.mimic = Mimic()
         self.ports = DetectDevices()
@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
                 self.portListBox.addItem(p[0])
 
         self.btn1.setEnabled(False)
-        self.btn2.setEnabled(False)
+        self.btn2.setEnabled(True)
 
         #self.lst.selectedItems()
         # getting item changed signal
@@ -155,10 +155,11 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def on_btn2_clicked(self):
+        self.mimic.show()
         if self.sensorPortOpen:
             if not self.sensorThreadCreated:
                 self.startSensorThread()
-                self.dash.show()
+                self.mimic.show()
 
     @Slot()
     def on_btn3_clicked(self):

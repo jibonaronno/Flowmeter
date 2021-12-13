@@ -11,19 +11,43 @@ class Mimic(QWidget):
 
     def initUI(self):
         self.text = "hello world"
-        self.setGeometry(0, 0, 800, 600)
+        self.setGeometry(0, 0, 1500, 600)
+
         self.setWindowTitle('Draw Demo')
+        self.meterFlow = "000.00"
 
     def paintEvent(self, event):
+
         qp = QPainter()
-        qp.begin(self)
+        #qp.setPen(QPen(Qt.black, 6, Qt.SolidLine))
+        #font = qp.font()
+        #font.setPixelSize(48)
+        #qp.setFont(font)
         #qp.setPen(QColor(Qt.red))
-        #qp.setFont(QFont('Arial', 20))
-        #qp.drawText(10, 50, "hello Python")
-        #qp.setPen(QColor(Qt.blue))
+
+        #font_db = QFontDatabase()
+        #font_id = font_db.addApplicationFont("Seven Segment.ttf")
+
+        qp.begin(self)
+
+        #qp.setFont(QFont('Courier New', 20))
+
+        qp.setPen(QColor(Qt.white))
+        #font = qp.font()
+        font = QFont('Seven Segment', 28)
+        #Sfont.setPixelSize(48)
+        qp.setFont(font)
         #qp.drawRect(10, 150, 150, 100)
         #qp.setPen(QColor(Qt.yellow))
         #qp.drawEllipse(100, 50, 100, 50)
-        qp.drawPixmap(220, 10, QPixmap("ico1.svg"))
+        qp.drawPixmap(20, 10, QPixmap("meter.jpg"))
+        qp.drawText(175, 170, "FLOW:" + self.meterFlow)
+
+        qp.drawPixmap(480, 10, QPixmap("meter.jpg"))
+
+        qp.drawPixmap(940, 10, QPixmap("meter.jpg"))
+        #htmlDoc1.drawContents(qp, rect2)
+
+        #qp.drawText(390, 152, "FLOW:" + self.meterFlow)
         #qp.fillRect(20, 175, 130, 70, QBrush(Qt.SolidPattern))
         qp.end()
