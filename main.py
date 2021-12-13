@@ -119,6 +119,14 @@ class MainWindow(QMainWindow):
                 self.sensorThreadCreated = True
                 print("Starting Sensor Thread")
 
+    def extractData(self, starData=""):
+        parts = starData.split(" ")
+        res = "0000.00"
+        if(len(parts) > 8):
+            val = int('0x' + parts[3]+parts[4]+parts[5]+parts[6])
+            res = str(val/10)
+        return res
+
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
         strdatetime = datetime.today().strftime('%m-%d-%Y %H:%M:%S')                #Collect Present Date Time
@@ -127,6 +135,7 @@ class MainWindow(QMainWindow):
         self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])    #Inserting data to database
         if(self.msgListBox.count() > 10):
             self.msgListBox.clear()
+            self.mimic.meterFlow1 = self.extractData(self.sensorDataString)
 
     @Slot()
     def on_btn1_clicked(self):
