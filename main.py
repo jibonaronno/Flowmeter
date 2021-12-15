@@ -52,6 +52,10 @@ _CMD_1 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_2 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_3 = [0x08, 0x04, 0x00, 0x22, 0x00, 0x02, 0xD1, 0x58]
 _CMD_4 = [0x08, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
+_CMD_5 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x30, 0x93]
+_CMD_6 = [0x08, 0x04, 0x00, 0x22, 0x00, 0x02, 0x30, 0x93]
+_CMD_7 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x30, 0x93]
+_CMD_8 = [0x08, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -77,6 +81,10 @@ class MainWindow(QMainWindow):
         self.cmdlist.append(_CMD_2)
         self.cmdlist.append(_CMD_3)
         self.cmdlist.append(_CMD_4)
+        self.cmdlist.append(_CMD_5)
+        self.cmdlist.append(_CMD_6)
+        self.cmdlist.append(_CMD_7)
+        self.cmdlist.append(_CMD_8)
 
 
         #List only usb-ttl ports in self.portListBox QListWidget
@@ -122,11 +130,19 @@ class MainWindow(QMainWindow):
                 self.sensorThreadCreated = True
                 print("Starting Sensor Thread")
 
-    def extractData(self, starData=""):
+    def extractFlowData(self, starData=""):
         parts = starData.split(" ")
         res = "0000.00"
         if(len(parts) >= 18):
             #val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
+            val = int(parts[12]+parts[13], base=16)
+            res = str(val/10)
+        return res
+
+    def extractSumData(self, starData=""):
+        parts = starData.split(" ")
+        res = "0000.00"
+        if(len(parts) >= 18):
             val = int(parts[12]+parts[13], base=16)
             res = str(val/10)
         return res
@@ -140,7 +156,13 @@ class MainWindow(QMainWindow):
         if(len(parts) >= 18):
             #print(parts[0] + " " +parts[9] + " " +parts[10] + " " +parts[11] + " " + parts[12])
             if(int(parts[9], base=16) == 8):
-                self.mimic.meterFlow1 = self.extractData(sensorString)
+                if(int(parts[3], base=16) == 00):
+                    self.mimic.meterFlow1 = self.extractFlowData(sensorString)
+                if(int(parts[3], base=16) == 34):
+                    self.mimic.meterSum1 = self.extractSumData(sensorString)
+                if (int(parts[3], base=16) == 4):
+                    #self.mimic.meterSum1 = self.extractSumData(sensorString)
+                    print("PERCENT : ")
 
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
