@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+
+'''
+Drag and drop concept came from https://www.youtube.com/watch?v=s1QZIwg3x3o excelent video.
+'''
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
