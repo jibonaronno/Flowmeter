@@ -2,16 +2,33 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from sticker import Sticker
 #
 class Mimic(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setAcceptDrops(True)
+        self.st = Sticker(self)
         self.initUI()
         #self.show()
+
+    def dragEnterEvent(self, ev:QDragLeaveEvent):
+        ev.accept()
+
+    def dragMoveEvent(self, ev:QDragMoveEvent):
+        qp = QPainter()
+        pass
+
+    def dropEvent(self, ev:QDropEvent):
+        pos = ev.pos()
+        self.st.move(pos)
+        ev.accept()
+
 
     def initUI(self):
         self.text = "hello world"
         self.setGeometry(0, 0, 1500, 1200)
+
 
         self.setWindowTitle('Draw Demo')
         self.meterFlow1 = "000.00"
@@ -20,6 +37,8 @@ class Mimic(QWidget):
         self.meterSum1 = "000.00"
         self.meterSum2 = "000.00"
         self.meterSum3 = "000.00"
+
+        self.st.show()
 
     def paintEvent(self, event):
 

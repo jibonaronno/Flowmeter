@@ -203,7 +203,7 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def on_btn2_clicked(self):
-        #self.mimic.show()
+        self.mimic.show()
         if self.sensorPortOpen:
             if not self.sensorThreadCreated:
                 self.startSensorThread()
