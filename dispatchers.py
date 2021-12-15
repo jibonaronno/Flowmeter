@@ -26,6 +26,7 @@ class PrimaryThread(QObject):
     def run(self):
         unit = []
         hexformat = ''
+        inhex = ''
         while True:
             try:
                 for line in self.codelist:
@@ -52,9 +53,13 @@ class PrimaryThread(QObject):
                         print('Ex in sensor Thread readline() 49 : ' + str(e))
                     for hx in unit:
                         hexformat = hexformat + '{0:02X} '.format(hx)
+                    for hx in line:
+                        inhex = inhex + '{0:02X} '.format(hx)
                     unit = b''
-                    self.signal.emit(str(line) + " - " + hexformat)
+                    #self.signal.emit(str(line).format("")+ " - " + hexformat)
+                    self.signal.emit(inhex + "- " + hexformat)
                     hexformat = ''
+                    inhex = ''
 
             except serial.SerialException as ex:
                 print("Error In SerialException" + ex.strerror)

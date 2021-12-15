@@ -44,6 +44,9 @@ _UI = join(dirname(abspath(__file__)), 'top.ui')
 _UI2 = join(dirname(abspath(__file__)), 'dashboard.ui')
 _UI3 = join(dirname(abspath(__file__)), 'commands.ui')
 
+'''
+dev_address function_code reg_addr_high reg_addr-LOW, reg_qntt_high red_qntt_low crc_low crc_high
+'''
 #08  04  00  00  00  02  71  52
 _CMD_1 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_2 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
@@ -122,23 +125,34 @@ class MainWindow(QMainWindow):
     def extractData(self, starData=""):
         parts = starData.split(" ")
         res = "0000.00"
-        if(len(parts) > 18):
+        if(len(parts) >= 18):
             #val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
-            val = int(parts[15]+parts[16], base=16)
+            val = int(parts[12]+parts[13], base=16)
             res = str(val/10)
         return res
+
+#Data Received from thread. parts[12] is dev id.
+#12-13-2021 23:40:37 - [8, 4, 0, 0, 0, 2, 113, 82] - 08 04 04 00 1A 00 00 43 43
+# return data: dev id - F.code - Bytes Count - B3 B2 B1 B0 - CRC - CRC
+#                 08      04        04         00 1A 00 00 - 43 - 43
+    def sendMeterDataFromSensorString(self, sensorString:str):
+        parts = sensorString.split(" ")
+        if(len(parts) >= 18):
+            #print(parts[0] + " " +parts[9] + " " +parts[10] + " " +parts[11] + " " + parts[12])
+            if(int(parts[9], base=16) == 8):
+                self.mimic.meterFlow1 = self.extractData(sensorString)
 
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
         strdatetime = datetime.today().strftime('%m-%d-%Y %H:%M:%S')                #Collect Present Date Time
-        print(strdatetime + " - " +self.sensorDataString)                           #
+        #print(strdatetime + " - " +self.sensorDataString)                           #
+        print(self.sensorDataString)
         self.msgListBox.addItem(strdatetime + " - " +self.sensorDataString)         #Insert incomming data to local List Box
         self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])    #Inserting data to database
-        self.mimic.meterFlow1 = self.extractData(self.sensorDataString)
+        self.sendMeterDataFromSensorString(self.sensorDataString)
         self.mimic.repaint()
         if(self.msgListBox.count() > 10):
             self.msgListBox.clear()
-
 
     @Slot()
     def on_btn1_clicked(self):
