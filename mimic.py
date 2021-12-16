@@ -3,14 +3,19 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from sticker import Sticker
+from charttab import ChartTab
 #
 class Mimic(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setAcceptDrops(True)
-        self.st = Sticker(self)
+        self.charts = ChartTab(self)
+        ##self.st = Sticker(self, png="meter.jpg")
         self.initUI()
         #self.show()
+
+    def AppendFlow1(self, data=0):
+        self.charts.Append(data)
 
     def dragEnterEvent(self, ev:QDragLeaveEvent):
         ev.accept()
@@ -21,13 +26,18 @@ class Mimic(QWidget):
 
     def dropEvent(self, ev:QDropEvent):
         pos = ev.pos()
-        self.st.move(pos)
+        ##self.st.move(pos)
         ev.accept()
+        print("POS : " + str(pos.x()) + " " + str(pos.y()))
+        ##self.st.selected = False
+        ##self.st.repaint()
 
 
     def initUI(self):
         self.text = "hello world"
         self.setGeometry(0, 0, 1500, 1200)
+        self.charts.setGeometry(10, 450, 1400, 500)
+        #self.charts.show()
 
 
         self.setWindowTitle('Draw Demo')
@@ -38,7 +48,10 @@ class Mimic(QWidget):
         self.meterSum2 = "000.00"
         self.meterSum3 = "000.00"
 
-        self.st.show()
+        '''
+        Code below displays a Sticker object on mimic window.
+        '''
+        #self.st.show()
 
     def paintEvent(self, event):
 

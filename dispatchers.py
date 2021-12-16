@@ -17,6 +17,7 @@ class PrimaryThread(QObject):
 
         self.codelist = cmdlist
         self.flagStop = False
+        self.pause = False
         super().__init__()
 
     def Stop(self):
@@ -29,6 +30,9 @@ class PrimaryThread(QObject):
         inhex = ''
         while True:
             try:
+                if self.pause:
+                    time.sleep(100)
+                    continue
                 for line in self.codelist:
                     if self.flagStop:
                         break

@@ -9,14 +9,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 class Sticker(QWidget):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, *args, png:str):
+        super().__init__(*args)
         self.pix = QPixmap()
-        self.initUI()
         self.selected = False;
+        self.png = png
+        self.initUI()
 
     def initUI(self):
-        self.pix.load('logo.png')
+        self.pix.load(self.png)
         self.setGeometry(self.pix.rect())
 
     def paintEvent(self, event):

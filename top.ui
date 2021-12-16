@@ -118,6 +118,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="btnPause">
+            <property name="text">
+             <string>Pause</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>

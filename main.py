@@ -56,6 +56,17 @@ _CMD_5 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x30, 0x93]
 _CMD_6 = [0x08, 0x04, 0x00, 0x22, 0x00, 0x02, 0x30, 0x93]
 _CMD_7 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x30, 0x93]
 _CMD_8 = [0x08, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
+_CMD_9 = [0x09, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
+_CMD_10 = [0x09, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
+_CMD_11 = [0x09, 0x04, 0x00, 0x22, 0x00, 0x02, 0xD1, 0x58]
+_CMD_12 = [0x09, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
+_CMD_13 = [0x09, 0x04, 0x00, 0x00, 0x00, 0x02, 0x30, 0x93]
+_CMD_14 = [0x09, 0x04, 0x00, 0x22, 0x00, 0x02, 0x30, 0x93]
+_CMD_15 = [0x09, 0x04, 0x00, 0x00, 0x00, 0x02, 0x30, 0x93]
+_CMD_16 = [0x09, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
+_CMD_17 = [0x0A, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
+_CMD_18 = [0x0A, 0x04, 0x00, 0x22, 0x00, 0x02, 0xD1, 0x58]
+_CMD_19 = [0x0A, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -85,7 +96,17 @@ class MainWindow(QMainWindow):
         self.cmdlist.append(_CMD_6)
         self.cmdlist.append(_CMD_7)
         self.cmdlist.append(_CMD_8)
-
+        self.cmdlist.append(_CMD_9)
+        self.cmdlist.append(_CMD_10)
+        self.cmdlist.append(_CMD_11)
+        self.cmdlist.append(_CMD_12)
+        self.cmdlist.append(_CMD_13)
+        self.cmdlist.append(_CMD_14)
+        self.cmdlist.append(_CMD_15)
+        self.cmdlist.append(_CMD_16)
+        self.cmdlist.append(_CMD_17)
+        self.cmdlist.append(_CMD_18)
+        self.cmdlist.append(_CMD_19)
 
         #List only usb-ttl ports in self.portListBox QListWidget
         self.ports = list(port_list.comports())
@@ -156,13 +177,30 @@ class MainWindow(QMainWindow):
         if(len(parts) >= 18):
             #print(parts[0] + " " +parts[9] + " " +parts[10] + " " +parts[11] + " " + parts[12])
             if(int(parts[9], base=16) == 8):
-                if(int(parts[3], base=16) == 00):
+                if(int(parts[3], base=16) == 0):
                     self.mimic.meterFlow1 = self.extractFlowData(sensorString)
+                    self.mimic.AppendFlow1(float(self.extractFlowData(sensorString)))
                 if(int(parts[3], base=16) == 34):
                     self.mimic.meterSum1 = self.extractSumData(sensorString)
                 if (int(parts[3], base=16) == 4):
                     #self.mimic.meterSum1 = self.extractSumData(sensorString)
-                    print("PERCENT : ")
+                    print("PERCENT 1: " + sensorString)
+            if (int(parts[9], base=16) == 9):
+                if (int(parts[3], base=16) == 0):
+                    self.mimic.meterFlow2 = self.extractFlowData(sensorString)
+                if (int(parts[3], base=16) == 34):
+                    self.mimic.meterSum2 = self.extractSumData(sensorString)
+                if (int(parts[3], base=16) == 4):
+                    # self.mimic.meterSum1 = self.extractSumData(sensorString)
+                    print("PERCENT 2: " + sensorString)
+            if (int(parts[9], base=16) == 10):
+                if (int(parts[3], base=16) == 0):
+                    self.mimic.meterFlow3 = self.extractFlowData(sensorString)
+                if (int(parts[3], base=16) == 34):
+                    self.mimic.meterSum3 = self.extractSumData(sensorString)
+                if (int(parts[3], base=16) == 4):
+                    # self.mimic.meterSum1 = self.extractSumData(sensorString)
+                    print("PERCENT 3: " + sensorString)
 
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
@@ -203,7 +241,7 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def on_btn2_clicked(self):
-        self.mimic.show()
+        #self.mimic.show()
         if self.sensorPortOpen:
             if not self.sensorThreadCreated:
                 self.startSensorThread()
@@ -219,6 +257,15 @@ class MainWindow(QMainWindow):
     @Slot()
     def on_btn4_clicked(self):
         self.dtv.showNormal()
+
+    @Slot()
+    def on_btnPause_clicked(self):
+        if self.btnPause.text() == "Pause":
+            self.btnPause.setText("Start")
+            self.sensor.pause = True
+        else:
+            self.btnPause.setText("Pause")
+            self.sensor.pause = False
 
 
 if __name__ == '__main__':
