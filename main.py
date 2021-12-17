@@ -192,9 +192,11 @@ class MainWindow(QMainWindow):
 #                 08      04        04         00 1A 00 00 - 43 - 43
     def sendMeterDataFromSensorString(self, sensorString:str):
         parts = sensorString.split(" ")
+        devid = 0
         if(len(parts) >= 18):
             #print(parts[0] + " " +parts[9] + " " +parts[10] + " " +parts[11] + " " + parts[12])
             if(int(parts[9], base=16) == 8):
+                devid = 8
                 if(int(parts[3], base=16) == 0):
                     self.mimic.meterFlow1 = self.extractFlowData(sensorString)
                     self.mimic.AppendFlow1(float(self.extractFlowData(sensorString)))
@@ -204,6 +206,7 @@ class MainWindow(QMainWindow):
                     #self.mimic.meterSum1 = self.extractSumData(sensorString)
                     print("PERCENT 1: " + sensorString)
             if (int(parts[9], base=16) == 9):
+                devid = 9
                 if (int(parts[3], base=16) == 0):
                     self.mimic.meterFlow2 = self.extractFlowData(sensorString)
                 if (int(parts[3], base=16) == 34):
@@ -212,6 +215,7 @@ class MainWindow(QMainWindow):
                     # self.mimic.meterSum1 = self.extractSumData(sensorString)
                     print("PERCENT 2: " + sensorString)
             if (int(parts[9], base=16) == 10):
+                devid = 10
                 if (int(parts[3], base=16) == 0):
                     self.mimic.meterFlow3 = self.extractFlowData(sensorString)
                 if (int(parts[3], base=16) == 34):
@@ -219,6 +223,7 @@ class MainWindow(QMainWindow):
                 if (int(parts[3], base=16) == 4):
                     # self.mimic.meterSum1 = self.extractSumData(sensorString)
                     print("PERCENT 3: " + sensorString)
+        return devid
 
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
@@ -226,8 +231,8 @@ class MainWindow(QMainWindow):
         #print(strdatetime + " - " +self.sensorDataString)                           #
         print(self.sensorDataString)
         self.msgListBox.addItem(strdatetime + " - " +self.sensorDataString)         #Insert incomming data to local List Box
-        self.db.insert_meter_data([strdatetime, self.sensorDataString, '0x001'])    #Inserting data to database
-        self.sendMeterDataFromSensorString(self.sensorDataString)
+        devid = self.sendMeterDataFromSensorString(self.sensorDataString)
+        self.db.insert_meter_data([strdatetime, self.sensorDataString, str(devid)])  # Inserting data to database
         self.mimic.repaint()
         if(self.msgListBox.count() > 10):
             self.msgListBox.clear()
@@ -263,7 +268,7 @@ class MainWindow(QMainWindow):
         if self.sensorPortOpen:
             if not self.sensorThreadCreated:
                 self.startSensorThread()
-                self.mimic.show()
+            self.mimic.show()
 
     @Slot()
     def on_btn3_clicked(self):

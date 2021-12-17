@@ -31,7 +31,8 @@ class DataView(QWidget):
         idx = 0
         data = self.crud.getListByDateRange(self.startdte.dateTime(), self.stopDate.dateTime())
         print(len(data))
-        print(data[0])
+        #print(data[0])
+        self.tableWidget.clear()
         self.tableWidget.setRowCount(len(data))
         for dat in data:
             self.tableWidget.setItem(idx, 0, QTableWidgetItem(dat[0]))
