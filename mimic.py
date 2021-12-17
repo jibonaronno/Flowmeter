@@ -36,7 +36,7 @@ class Mimic(QWidget):
     def initUI(self):
         self.text = "hello world"
         self.setGeometry(0, 0, 1500, 1200)
-        self.charts.setGeometry(10, 450, 1400, 500)
+        self.charts.setGeometry(10, 400, 1400, 500)
         #self.charts.show()
 
 

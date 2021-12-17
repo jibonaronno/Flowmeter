@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 from os.path import join, dirname, abspath
+from PyQt5.QtCore import QDateTime
 
 dbfile = join(dirname(abspath(__file__)), 'flow.db')
 
@@ -28,6 +29,19 @@ class CRUD(object):
         cur.execute(sql, data)
         self.con.commit()
         return cur.lastrowid
+
+    def getListByDateRange(self, startd:QDateTime, endd:QDateTime):
+        #print(startd.date().toString("MM-dd-yyyy") + " " + startd.time().toString('HH:mm:ss'))
+        #print(startd.toString("MM-dd-yyyy HH:mm:ss"))
+        data = []
+        sql = "SELECT * FROM meter_data WHERE datetime BETWEEN '"+ startd.toString("MM-dd-yyyy HH:mm:ss") + "' AND '" + endd.toString("MM-dd-yyyy HH:mm:ss") + "'"
+        cur = self.con.cursor()
+        cur.execute(sql)
+        rows = cur.fetchall()
+        for row in rows:
+            dtms = row[0].split(" ")
+            data.append([dtms[0], dtms[1], row[2], row[1]])
+        return data
 
     def insert_meter_data_hard(self):
         try:

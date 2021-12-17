@@ -156,20 +156,38 @@ class MainWindow(QMainWindow):
         res = "0000.00"
         if(len(parts) >= 18):
             #val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
-            val = int(parts[12]+parts[13], base=16)
-            res = str(val/10)
+            val = int(parts[12]+parts[13]+parts[14]+parts[15], base=16)
+            if val > 0:
+                res = str(val/1000)
+            else:
+                res = 0
         return res
 
     def extractSumData(self, starData=""):
         parts = starData.split(" ")
         res = "0000.00"
         if(len(parts) >= 18):
-            val = int(parts[12]+parts[13], base=16)
-            res = str(val/10)
+            val = int(parts[12]+parts[13]+parts[14]+parts[15], base=16)
+            if val > 0:
+                res = str(val/1000)
+            else:
+                res = 0
         return res
 
-#Data Received from thread. parts[12] is dev id.
-#12-13-2021 23:40:37 - [8, 4, 0, 0, 0, 2, 113, 82] - 08 04 04 00 1A 00 00 43 43
+    def extractPercentData(self, starData=""):
+        parts = starData.split(" ")
+        res = "0000.00"
+        if (len(parts) >= 18):
+            val = int(parts[12] + parts[13] + parts[14] + parts[15], base=16)
+            if val > 0:
+                res = str(val/1000)
+            else:
+                res = 0
+        return res
+
+#Data Received from thread. parts[12] is dev id. Not Applicable now.
+#12-13-2021 23:40:37 - [8, 4, 0, 0, 0, 2, 113, 82] - 08 04 04 00 1A 00 00 43 43 . Terminal data is shown as below
+#08 04 00 00 00 02 71 52 - 08 04 04 00 A1 00 00 43 43
 # return data: dev id - F.code - Bytes Count - B3 B2 B1 B0 - CRC - CRC
 #                 08      04        04         00 1A 00 00 - 43 - 43
     def sendMeterDataFromSensorString(self, sensorString:str):

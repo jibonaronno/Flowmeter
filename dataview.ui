@@ -47,6 +47,9 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -63,6 +66,26 @@
              <width>300</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnQuery">
+           <property name="text">
+            <string>Search</string>
            </property>
           </widget>
          </item>
@@ -112,19 +135,27 @@
           <number>15</number>
          </property>
          <item>
-          <widget class="QListWidget" name="listWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>800</width>
-             <height>500</height>
-            </size>
-           </property>
+          <widget class="QTableWidget" name="tableWidget">
+           <column>
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Time</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Devid</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Values</string>
+            </property>
+           </column>
           </widget>
          </item>
         </layout>

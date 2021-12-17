@@ -3,6 +3,7 @@ from os.path import join, dirname, abspath
 from qtpy import uic
 from qtpy.QtCore import Slot, QTimer, QThread, Signal, QObject, Qt
 from PyQt5.QtGui import *
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 from pyqtgraph import PlotWidget
 import pyqtgraph as pg
@@ -20,9 +21,9 @@ class ChartTab(QWidget):
         self.plotter = PlotWidget()
         self.plotter.showGrid(x=True, y=True, alpha=None)
         self.plotter.setLabel('left', 'Flow : m3/M')
-        self.plotter.getViewBox().setYRange(-2, 30)
+        self.plotter.getViewBox().setYRange(0, 20000)
         self.curve1 = self.plotter.plot(0, 0, "flow", 'b')
-        self.ttm =0.0
+        self.ttm = 0.0
         self.tfdata = deque()
         self.maxLen = 100
         self.vlay01.addWidget(self.plotter)
