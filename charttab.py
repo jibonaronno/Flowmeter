@@ -21,7 +21,7 @@ class ChartTab(QWidget):
         self.plotter = PlotWidget()
         self.plotter.showGrid(x=True, y=True, alpha=None)
         self.plotter.setLabel('left', 'Flow : m3/M')
-        self.plotter.getViewBox().setYRange(0, 20000)
+        self.plotter.getViewBox().setYRange(0, 40)
         self.curve1 = self.plotter.plot(0, 0, "flow", 'b')
         self.ttm = 0.0
         self.tfdata = deque()
