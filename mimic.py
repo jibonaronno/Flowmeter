@@ -78,16 +78,16 @@ class Mimic(QWidget):
         #qp.setPen(QColor(Qt.yellow))
         #qp.drawEllipse(100, 50, 100, 50)
         qp.drawPixmap(20, 10, QPixmap("meter.jpg"))
-        qp.drawText(175, 170, "FLOW:" + self.meterFlow1)
-        qp.drawText(175, 200, " SUM:" + self.meterSum1)
+        qp.drawText(175, 170, "FLOW:" + str(self.meterFlow1))
+        qp.drawText(175, 200, " SUM:" + str(self.meterSum1))
 
         qp.drawPixmap(480, 10, QPixmap("meter.jpg"))
-        qp.drawText(635, 170, "FLOW:" + self.meterFlow2)
-        qp.drawText(635, 200, " SUM:" + self.meterSum2)
+        qp.drawText(635, 170, "FLOW:" + str(self.meterFlow2))
+        qp.drawText(635, 200, " SUM:" + str(self.meterSum2))
 
         qp.drawPixmap(940, 10, QPixmap("meter.jpg"))
-        qp.drawText(1095, 170, "FLOW:" + self.meterFlow3)
-        qp.drawText(1095, 200, " SUM:" + self.meterSum3)
+        qp.drawText(1095, 170, "FLOW:" + str(self.meterFlow3))
+        qp.drawText(1095, 200, " SUM:" + str(self.meterSum3))
         #htmlDoc1.drawContents(qp, rect2)
 
         #qp.drawText(390, 152, "FLOW:" + self.meterFlow)
