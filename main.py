@@ -156,7 +156,7 @@ class MainWindow(QMainWindow):
         res = "0000.00"
         if(len(parts) >= 18):
             #val = int('0x' + parts[15]+parts[16]+parts[17]+parts[18], base=16)
-            val = int(parts[12]+parts[13]+parts[14]+parts[15], base=16)
+            val = int(parts[12]+parts[13], base=16)
             if val > 0:
                 res = str(val/1000)
             else:
@@ -167,7 +167,7 @@ class MainWindow(QMainWindow):
         parts = starData.split(" ")
         res = "0000.00"
         if(len(parts) >= 18):
-            val = int(parts[12]+parts[13]+parts[14]+parts[15], base=16)
+            val = int(parts[12]+parts[13], base=16)
             if val > 0:
                 res = str(val/1000)
             else:
@@ -178,7 +178,8 @@ class MainWindow(QMainWindow):
         parts = starData.split(" ")
         res = "0000.00"
         if (len(parts) >= 18):
-            val = int(parts[12] + parts[13] + parts[14] + parts[15], base=16)
+            #val = int(parts[12] + parts[13] + parts[14] + parts[15], base=16)
+            val = int(parts[12] + parts[13], base=16)
             if val > 0:
                 res = str(val/1000)
             else:
