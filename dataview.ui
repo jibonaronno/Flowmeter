@@ -83,11 +83,53 @@
           <number>2</number>
          </property>
          <item>
+          <widget class="QLabel" name="label3">
+           <property name="text">
+            <string>Dev ID</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbDevid">
+           <item>
+            <property name="text">
+             <string>8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>10</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnQuery">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
            <property name="text">
             <string>Search</string>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -136,6 +178,12 @@
          </property>
          <item>
           <widget class="QTableWidget" name="tableWidget">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>471</height>
+            </size>
+           </property>
            <column>
             <property name="text">
              <string>Date</string>

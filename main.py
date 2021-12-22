@@ -276,10 +276,13 @@ class MainWindow(QMainWindow):
         ''' Example code to insert data in database
         #self.db.insert_meter_data_hard()
         '''
+        self.dtv.summery = True
+        self.dtv.showNormal()
 
 
     @Slot()
     def on_btn4_clicked(self):
+        self.dtv.summery = None
         self.dtv.showNormal()
 
     @Slot()

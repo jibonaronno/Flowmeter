@@ -30,11 +30,15 @@ class CRUD(object):
         self.con.commit()
         return cur.lastrowid
 
-    def getListByDateRange(self, startd:QDateTime, endd:QDateTime):
+    def getListByDateRange(self, startd:QDateTime, endd:QDateTime, devid=None):
         #print(startd.date().toString("MM-dd-yyyy") + " " + startd.time().toString('HH:mm:ss'))
         #print(startd.toString("MM-dd-yyyy HH:mm:ss"))
+        sql = ""
         data = []
-        sql = "SELECT * FROM meter_data WHERE datetime BETWEEN '"+ startd.toString("MM-dd-yyyy HH:mm:ss") + "' AND '" + endd.toString("MM-dd-yyyy HH:mm:ss") + "'"
+        if devid:
+            sql = "SELECT * FROM meter_data WHERE datetime BETWEEN '" + startd.toString("MM-dd-yyyy HH:mm:ss") + "' AND '" + endd.toString("MM-dd-yyyy HH:mm:ss") + "'" + "AND devid="+ str(devid)
+        else:
+            sql = "SELECT * FROM meter_data WHERE datetime BETWEEN '"+ startd.toString("MM-dd-yyyy HH:mm:ss") + "' AND '" + endd.toString("MM-dd-yyyy HH:mm:ss") + "'"
         cur = self.con.cursor()
         cur.execute(sql)
         rows = cur.fetchall()
