@@ -22,7 +22,7 @@ class DataView(QWidget):
         self.crud.openDBHard()
         self.summery = None
         if summery:
-            self.summery = summery;
+            self.summery = summery
         self.initUI()
         #self.tableWidget = QTableWidget()
 
@@ -41,7 +41,7 @@ class DataView(QWidget):
             if val > 0:
                 res = str(val/1000)
             else:
-                res = 0
+                res = "0"
         return res
 
     def ModbusData(self, sensorString:str):
@@ -54,6 +54,21 @@ class DataView(QWidget):
                 #if(int(parts[3], base=16) == 0):
             flowd = self.extractData(sensorString)
         return flowd
+
+    def getListByFieldType(self, Data:list, fieldType:str):
+        res = []
+        crit = "00"
+        if fieldType == "Flow":
+            crit = "00"
+        elif fieldType == "Total":
+            crit = "22"
+        elif fieldType == "Percent":
+            crit = "04"
+        print("Field Type : " + crit)
+        for dat in Data:
+            if dat[3] == crit:
+                res.insert(dat)
+        return res
 
     def GenerateSummery(self):
         idx = 0
@@ -76,6 +91,7 @@ class DataView(QWidget):
             flowd = '0'
             devid = int(self.cmbDevid.itemText(self.cmbDevid.currentIndex()))
             data = self.crud.getListByDateRange(self.startdte.dateTime(), self.stopDate.dateTime(), devid)
+            #data = self.getListByFieldType(data, self.cmbField.itemText(self.cmbDevid.currentIndex()))
             print(len(data))
             #print(data[0])
             self.tableWidget.clear()

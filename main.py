@@ -51,7 +51,7 @@ dev_address function_code reg_addr_high reg_addr-LOW, reg_qntt_high red_qntt_low
 _CMD_1 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_2 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_3 = [0x08, 0x04, 0x00, 0x22, 0x00, 0x02, 0xD1, 0x58]
-_CMD_4 = [0x08, 0x04, 0x00, 0x04, 0x00, 0x02, 0x71, 0x52]
+_CMD_4 = [0x08, 0x04, 0x00, 0x04, 0x00, 0x02, 0x30, 0x93]
 _CMD_5 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
 _CMD_6 = [0x08, 0x04, 0x00, 0x22, 0x00, 0x02, 0xD1, 0x58]
 _CMD_7 = [0x08, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0x52]
@@ -229,8 +229,8 @@ class MainWindow(QMainWindow):
     def sensorData(self, data_stream):
         self.sensorDataString = data_stream
         strdatetime = datetime.today().strftime('%m-%d-%Y %H:%M:%S')                #Collect Present Date Time
-        #print(strdatetime + " - " +self.sensorDataString)                           #
-        print(self.sensorDataString)
+        print(strdatetime + " - " +self.sensorDataString)                           #
+        #print(self.sensorDataString)
         self.msgListBox.addItem(strdatetime + " - " +self.sensorDataString)         #Insert incomming data to local List Box
         devid = self.sendMeterDataFromSensorString(self.sensorDataString)
         self.db.insert_meter_data([strdatetime, self.sensorDataString, str(devid)])  # Inserting data to database
